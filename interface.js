@@ -72,10 +72,6 @@ app.get("/cancelLogin",function(req,res){
 	res.json({massage:'退出成功',code:200});
 })//退出登录
 
-/*app.post("/avatarFile", upload.single('avatar'), function(req,res){
-	console.log(req.file);
-	res.end("1");
-})*/
 
 app.post("/avatarFile", upload.single('avatar'),function(req,res){
     MongoClient.connect(mongdbUrl,function(err,db){
@@ -101,13 +97,10 @@ app.post("/avatarFile", upload.single('avatar'),function(req,res){
     })
 })//头像设置
 
-/*app.get("/findFriend",function(req,res){
+app.get("/findFriend",function(req,res){
 	MongoClient.connect(mongdbUrl,function(err,db){
 		var collection = db.collection("cool");
 		collection.find({"first_name":{$ne:null},$or:[{"first_name":req.query.val},{"id":req.query.val-0}]}).toArray(function(err,data){
-			for(var i in data){
-				
-			}
 			if(err){
 				console.log(err)
 			}else{
@@ -122,27 +115,29 @@ app.post("/avatarFile", upload.single('avatar'),function(req,res){
 						}else{
 							thisData.avatar = data[i].avatar;
 						}
-						console.log(data[i].friend[k].first_name,req.query.val)
 						if(data[i].friend[k].first_name == req.session.thisData.first_name || data[i].friend[k].id == req.session.thisData.first_name){
 							thisData.relation = "friend";
 						}
 						data[i] = thisData;
 					}
 				}
-				res.end(JSON.stringify(data));
+				data.code = 200;
+				res.json(data);
 			}
 		});
 	})
 })//好友查询接口
 
+
 app.get("/verification",function(req,res){
-	if(req.query.first_name == req.session.status){
-		res.end("3");
+	console.log(req.query,req.session.thisData)
+	if(req.query.id == req.session.thisData.id){
+		res.json({code:500,massage:"无法给自己发送好友请求"});
 		return;
 	}
 	MongoClient.connect(mongdbUrl,function(err,db){
 		var collection = db.collection("cool");
-		collection.find({"first_name":req.query.aims}).toArray(function(err,data){
+		collection.find({"id":req.query.id,"first_name":req.query.aims}).toArray(function(err,data){
 			var newData = req.query;
 			newData.first_name = req.session.status;
 			newData.id = req.session.thisData.id
@@ -156,12 +151,12 @@ app.get("/verification",function(req,res){
 			}
 			for(var i in data[0].news){
 				if( data[0].news[i].first_name == req.query.aims ){
-					res.end("2")
+					res.json({code:500,massage:"消息请求未处理"});
 					db.close();
 					return;
 				}
 			}//好友请求已存在
-			collection.update({"first_name":req.query.aims},{$set:{"news":newsData}},function(err,result){
+			collection.update({"id":req.query.id,"first_name":req.query.aims},{$set:{"news":newsData}},function(err,result){
 				if(err){
 					console.log(err)
 				}else{
@@ -171,7 +166,9 @@ app.get("/verification",function(req,res){
 			})
 		})
 	})
-})//验证消息
+})//发送好友请求
+/*
+
 
 app.get("/news/agreeFriend",function(req,res){
 	MongoClient.connect(mongdbUrl,function(err,db){

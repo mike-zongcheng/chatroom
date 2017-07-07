@@ -4,8 +4,8 @@
     <router-link to="/Registered" class="home_registered" v-if="loginshow">注册</router-link>
     <router-link to="/login" class="home_login" v-if="loginshow">登录</router-link>
     <router-link to="/info" class="home_login">头像</router-link>
-    <a href="chatroom" class="home_avatar">聊天室</a>
-    <a href="friend" class="home_avatar">好友列表</a>
+    <router-link to="/friend/add" class="home_avatar">聊天室</router-link>
+    <router-link to="/friend/list" class="home_avatar">好友列表</router-link>
     <a href="javascript:;" @click="cancelLogin" v-if="!loginshow" class="outLogin">退出登录</a>
     <my-massage :msg="msg" :callback="callback" ></my-massage>
   </div>

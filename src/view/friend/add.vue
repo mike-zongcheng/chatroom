@@ -1,15 +1,28 @@
 <template>
-    <div class="homeBox">
-        <label class="login_name">
-            <span>用户名：</span>
-            <input type="text" v-model="name" name="name">
-        </label>
-        <label class="login_password">
-            <span>密码：</span>
-            <input type="password" v-model="password" name="password">
-        </label>
-        <button class="login_btn" @click="updata">登录</button>
-        <my-massage :msg="msg" :callback="callback" ></my-massage>
+    <div class="friendBox">
+        <div class="friendTop">
+            <input type="text" v-model="val" />
+            <button type="button" @click="find" id="friend_find">查找好友</button>
+        </div>
+        <ul class="friendAddList">
+            <li v-for="todo in friendList">
+                <div class="friendAdd_avatarBox">
+                    <img :src="todo.avatar">
+                </div>
+                <div class="friendAdd_info">
+                    <div class="friendAdd_name">{{todo.first_name}}</div>
+                </div>
+                <button type="button" class="friendAdd_submit" data-index="0">添加好友</button>
+            </li>
+        </ul>
+        <div class="popUpBox" v-show="popUp">
+            <div class="popUp_titleBox">
+                <span class="popUp_title">验证消息</span><span class="clone">x</span>
+            </div>
+            <div class="popUpBox_main">
+                <input type="text"><button type="button">提交</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -25,6 +38,9 @@ export default {
       name:'',
       password:'',
       msg:"",
+      val:"",
+      friendList:"",
+      popUp:false,
       callback:function(){}
     }
   },
@@ -32,22 +48,17 @@ export default {
     'my-massage':massage
   },
   methods:{
-    updata(){
+    find(){
       var _self = this;
-      axios.post("/api/process_login",{
-        name:_self.name,
-        password:_self.password
+      axios.get("/api/findFriend",{
+        params:{val:_self.val}
       }).then((req)=>{
-        this.msg = req.data.massage;
-        if(req.data.code == 200){
-          this.callback = function(){
-            this.$router.replace({path:"/"})
-          }
-        }else{
-          this.callback = function(){}
+        console.log(req)
+        if(req.status == 200){
+          _self.friendList = req.data
         }
       })
-    }//登录提交
+    }
   }
 }
 </script>

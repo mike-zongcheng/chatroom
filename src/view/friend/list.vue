@@ -1,15 +1,27 @@
 <template>
-    <div class="homeBox">
-        <label class="login_name">
-            <span>用户名：</span>
-            <input type="text" v-model="name" name="name">
-        </label>
-        <label class="login_password">
-            <span>密码：</span>
-            <input type="password" v-model="password" name="password">
-        </label>
-        <button class="login_btn" @click="updata">登录</button>
-        <my-massage :msg="msg" :callback="callback" ></my-massage>
+    <div data-reactroot="" class="friendBox">
+        <div class="friendTop">
+            <router-link to="/friend/news" class="friend_news">消息中心</router-link>
+            <router-link to="/friend/add" class="friend_add">添加好友</router-link>
+        </div>
+        <div class="friendListBox">
+          <div class="friendListNull" v-if="friendNull">暂无好友</div>
+          <ul class="friendList">{{todoList}}
+              <li>
+                <div class="friend_avatarBox">
+                  <img src="" />
+                </div>
+                <div class="friend_infoBox">
+                  <div class="friend_name">21312</div>
+                  <span class="friend_id">12312</span>
+                </div>
+                <div class="fried_buttons">
+                  <button type="button" class="friend_chat">私聊</button>
+                  <button type="button" class="friend_delete">删除好友</button>
+                </div>
+              </li>
+          </ul>
+        </div>
     </div>
 </template>
 
@@ -23,6 +35,7 @@ export default {
   data () {
     return {
       name:'',
+      friendNull:false,
       password:'',
       msg:"",
       callback:function(){}
@@ -32,23 +45,16 @@ export default {
     'my-massage':massage
   },
   methods:{
-    updata(){
-      var _self = this;
-      axios.post("/api/process_login",{
-        name:_self.name,
-        password:_self.password
-      }).then((req)=>{
-        this.msg = req.data.massage;
-        if(req.data.code == 200){
-          this.callback = function(){
-            this.$router.replace({path:"/"})
-          }
-        }else{
-          this.callback = function(){}
-        }
-      })
-    }//登录提交
-  }
+    
+  },
+  computed:mapState({
+    count:"count",
+    status:"status",
+    todoList(){
+      console.log(this.status)
+      return 1;
+    }
+  })
 }
 </script>
 

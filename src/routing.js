@@ -2,14 +2,17 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import {mapState} from 'vuex'
 import Home from './view/home/Home.vue'
-import Game from './view/game/index.vue'
 import Recharge from './view/home/Recharge.vue'
 import Withdraw from './view/home/withdraw.vue'
-import Funds from './view/funds/index.vue'
 import Head from './view/shared/head.vue'
 import Login from './view/login/index.vue'
 import Avatar from './view/avatar/index.vue'
 import Registered from './view/registered/index.vue'
+
+//好友部分
+import FriendList from './view/friend/list.vue'
+import FriendAdd from './view/friend/add.vue'
+import FriendNews from './view/friend/News.vue'
 
 Vue.use(VueRouter);
 
@@ -30,7 +33,6 @@ const router = new VueRouter({//带有name的路由不会进行登录判断，na
 			components:{default:Registered,head:Head},
 			name:"true"
 		},
-		{path:"/Game",components:{default:Game}},
 		{
 			path:"/Recharge",
 			components:{default:Recharge,head:Head}
@@ -44,8 +46,16 @@ const router = new VueRouter({//带有name的路由不会进行登录判断，na
 			components:{default:Avatar,head:Head}
 		},
 		{
-			path:"/funds/:name",
-			components:{default:Funds,head:Head}
+			path:"/friend/list",
+			components:{default:FriendList,head:Head}
+		},
+		{
+			path:"/friend/add",
+			components:{default:FriendAdd,head:Head}
+		},
+		{
+			path:"/friend/news",
+			components:{default:FriendNews,head:Head}
 		},
 		{path:"*",component:{template:"<div>这个页面不存在：404</div>"}}
 	]

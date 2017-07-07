@@ -236,13 +236,14 @@ li{list-style: none;}
 .friendList li{ height: 140px; border-bottom: 1px solid #ffcdac;}
 .friend_avatarBox{float: left;width: 92px; height: 92px;text-align: center; margin:24px 30px 0 40px; border:1px solid #ffcdac; border-radius: 92px; overflow: hidden;}
 .friend_avatarBox img{max-width: 92px; max-height: 92px;}
-.friend_infoBox{float: left;color: #666;margin-top: 35px;}
+.friend_infoBox{float: left;color: #666;margin-top: 35px; width: 356px;}
 .friend_name{font-size: 24px;}
 .friend_id{font-size: 22px;}
 .friend_buttons{float: right;margin-right: 36px;}
 .friend_chat{float: left;}
 .friend_delete,.friend_chat{ float: left;background: #fcaf17;color: #fff; border:none;width: 130px; height: 38px;font-size: 18px; border-radius: 4px; margin:51px 0 0 15px;}
-
+.friendListBox{width: 100%;}
+.friendListNull{color: #fcaf17;font-size: 38px; text-align: center;line-height: 600px;}
 /* 好友列表 */
 
 .friendTop input{width: 600px; height: 38px; border:1px solid #ffcdac; padding-left: 10px; color: #fcaf17;border-radius: 4px; margin-left: 40px;}
@@ -255,7 +256,7 @@ li{list-style: none;}
 .friendAdd_name{font-size: 24px; color: #333;}
 .friendAdd_submit{float: right; width: 80px; height: 30px; border:1px solid #fcaf17; background: #fff; color:#fcaf17; margin:55px 68px 0 0; border-radius:4px; }
 .friendAdd_already{float: right; width: 80px; height: 30px; border:1px solid #ccc; text-align: center; line-height: 30px; background: #fff; color:#ccc; margin:55px 68px 0 0; border-radius:4px; }
-.popUpBox{ width: 400px; height: 230px; display: none; background: #fbc65e;border-right: 8px;position: fixed; margin:-115px 0 0 -200px; left: 50%;top: 50%; }
+.popUpBox{ width: 400px; height: 230px; background: #fbc65e;border-right: 8px;position: fixed; margin:-115px 0 0 -200px; left: 50%;top: 50%; }
 .popUp_titleBox{width: 360px; margin:20px auto 0; color: #fff; overflow: hidden;}
 .popUp_title{float: left;font-size: 18px;}
 .clone{float: right;cursor: pointer;font-size: 24px;}
