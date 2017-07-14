@@ -5,24 +5,25 @@
             <button type="button" @click="find" id="friend_find">查找好友</button>
         </div>
         <ul class="friendAddList">
-            <li v-for="todo in friendList">
+            <li v-for="(todo,index) in friendList">
                 <div class="friendAdd_avatarBox">
                     <img :src="todo.avatar">
                 </div>
                 <div class="friendAdd_info">
                     <div class="friendAdd_name">{{todo.first_name}}</div>
                 </div>
-                <button type="button" class="friendAdd_submit" data-index="0">添加好友</button>
+                <button type="button" class="friendAdd_submit" @click="showPopup(index)">添加好友</button>
             </li>
         </ul>
         <div class="popUpBox" v-show="popUp">
             <div class="popUp_titleBox">
-                <span class="popUp_title">验证消息</span><span class="clone">x</span>
+                <span class="popUp_title">验证消息</span><span class="clone" @click="hidePopup">x</span>
             </div>
             <div class="popUpBox_main">
-                <input type="text"><button type="button">提交</button>
+                <input type="text" v-model="info" ><button type="button" @click="submit">提交</button>
             </div>
         </div>
+        <my-massage :msg="msg" :callback="callback" ></my-massage>
     </div>
 </template>
 
@@ -37,10 +38,12 @@ export default {
     return {
       name:'',
       password:'',
-      msg:"",
       val:"",
       friendList:"",
       popUp:false,
+      msg:"",
+      info:"",
+      listIndex:0,
       callback:function(){}
     }
   },
@@ -58,6 +61,29 @@ export default {
           _self.friendList = req.data
         }
       })
+    },//查找
+    submit(){
+      var data = this.friendList[this.listIndex],
+          _self = this;
+      axios.get("/api/verification",{
+        params:{
+          id:data.id,
+          aims:data.first_name,
+          massage:_self.info
+        }
+      }).then((req)=>{
+        this.popUp = false;
+        this.msg = req.data.massage;
+        this.info = '';
+      })
+    },//添加好友
+    showPopup(index){
+      this.listIndex = index;
+      this.popUp = true;
+    },
+    hidePopup(){
+      this.popUp = false;
+      this.info = '';
     }
   }
 }

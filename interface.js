@@ -67,7 +67,6 @@ app.post("/process_registered",function(req,res){
 })//注册
 
 app.get("/cancelLogin",function(req,res){
-	console.log(1)
 	req.session.status = false;
 	res.json({massage:'退出成功',code:200});
 })//退出登录
@@ -130,37 +129,42 @@ app.get("/findFriend",function(req,res){
 
 
 app.get("/verification",function(req,res){
-	console.log(req.query,req.session.thisData)
 	if(req.query.id == req.session.thisData.id){
 		res.json({code:500,massage:"无法给自己发送好友请求"});
 		return;
 	}
 	MongoClient.connect(mongdbUrl,function(err,db){
 		var collection = db.collection("cool");
-		collection.find({"id":req.query.id,"first_name":req.query.aims}).toArray(function(err,data){
-			var newData = req.query;
+		collection.find({"id":req.query.id-0,"first_name":req.query.aims}).toArray(function(err,data){
+			if(data.length == 0){
+				res.json({code:500,massage:"无数据"})
+				return;
+			}
+			var newData = {};
 			newData.first_name = req.session.status;
-			newData.id = req.session.thisData.id
-			newData.avatar = req.session.thisData.avatar
+			newData.id = req.session.thisData.id;
+			newData.avatar = req.session.thisData.avatar;
+			newData.massage = req.query.massage;
 			if(data[0].news){
 				var newsData = data[0].news;
-				newsData.push(req.query)
+				newsData.push(newData)
 			}else{
 				var newsData = [];
 				newsData.push(newData);
 			}
 			for(var i in data[0].news){
-				if( data[0].news[i].first_name == req.query.aims ){
-					res.json({code:500,massage:"消息请求未处理"});
+				console.log(data[0].news[i].id, req.session.thisData.id)
+				if( data[0].news[i].id == req.session.thisData.id ){
+					res.json({code:500,massage:"好友请求已存在"});
 					db.close();
 					return;
 				}
 			}//好友请求已存在
-			collection.update({"id":req.query.id,"first_name":req.query.aims},{$set:{"news":newsData}},function(err,result){
+			collection.update({"id":req.query.id-0,"first_name":req.query.aims},{$set:{"news":newsData}},function(err,result){
 				if(err){
 					console.log(err)
 				}else{
-					res.end("true")
+					res.json({code:200,massage:"消息已发送"})
 				}
 				db.close();
 			})
