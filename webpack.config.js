@@ -46,7 +46,7 @@ module.exports = {
     noInfo: true,
     hot : true,
     inline : true,
-    port:8080,
+    port:1024,
     proxy: {
       '/api': {
         target:'http://localhost:1996',

@@ -22,6 +22,7 @@
               </li>
           </ul>
         </div>
+        <my-massage :msg="msg" :callback="callback" ></my-massage>
     </div>
 </template>
 
@@ -54,7 +55,13 @@ export default {
       console.log(this.status)
       return 1;
     }
-  })
+  }),
+  created(){
+    /*axios.get("/api/friend",{}).then((req)=>{
+      console.log(req)
+    })*/
+  }
+
 }
 </script>
 

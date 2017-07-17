@@ -171,6 +171,26 @@ app.get("/verification",function(req,res){
 		})
 	})
 })//发送好友请求
+
+app.get("/friend",function(req,res){
+	MongoClient.connect(mongdbUrl,function(err,db){
+		var collection = db.collection("cool");
+		collection.find({"id":req.session.thisData.id,"first_name":{$ne:null}}).toArray(function(err,data){
+			res.json({code:200,data:data[0].friend});
+		})
+	})
+	
+})
+
+app.get("/friendNews",function(req,res){
+	MongoClient.connect(mongdbUrl,function(err,db){
+		var collection = db.collection("cool");
+		collection.find({"first_name":req.session.status}).toArray(function(err,data){
+			res.render("news",{component:news(data[0].news?data[0].news:[]),news:JSON.stringify(data[0].news)});
+		})
+	})
+})
+
 /*
 
 
