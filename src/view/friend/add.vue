@@ -23,7 +23,7 @@
                 <input type="text" v-model="info" ><button type="button" @click="submit">提交</button>
             </div>
         </div>
-        <my-massage :msg="msg" :callback="callback" ></my-massage>
+        <my-massage :msg.sync="msg" ></my-massage>
     </div>
 </template>
 
@@ -33,59 +33,58 @@ import axios from 'axios'
 import massage from '../shared/massage.vue'
 
 export default {
-  name: 'main',
-  data () {
-    return {
-      name:'',
-      password:'',
-      val:"",
-      friendList:"",
-      popUp:false,
-      msg:"",
-      info:"",
-      listIndex:0,
-      callback:function(){}
-    }
-  },
-  components:{
-    'my-massage':massage
-  },
-  methods:{
-    find(){
-      var _self = this;
-      axios.get("/api/findFriend",{
-        params:{val:_self.val}
-      }).then((req)=>{
-        console.log(req)
-        if(req.status == 200){
-          _self.friendList = req.data
+    name: 'main',
+    data () {
+        return {
+            name:'',
+            password:'',
+            val:"",
+            friendList:"",
+            popUp:false,
+            msg:"",
+            info:"",
+            listIndex:0,
         }
-      })
-    },//查找
-    submit(){
-      var data = this.friendList[this.listIndex],
-          _self = this;
-      axios.get("/api/verification",{
-        params:{
-          id:data.id,
-          aims:data.first_name,
-          massage:_self.info
-        }
-      }).then((req)=>{
-        this.popUp = false;
-        this.msg = req.data.massage;
-        this.info = '';
-      })
-    },//添加好友
-    showPopup(index){
-      this.listIndex = index;
-      this.popUp = true;
     },
-    hidePopup(){
-      this.popUp = false;
-      this.info = '';
+    components:{
+        'my-massage':massage
+    },
+    methods:{
+        find(){
+            var _self = this;
+            axios.get("/api/findFriend",{
+                params:{val:_self.val}
+            }).then((req)=>{
+                console.log(req)
+                if(req.status == 200){
+                    _self.friendList = req.data
+                }
+            })
+        },//查找
+        submit(){
+            var data = this.friendList[this.listIndex],
+                _self = this;
+            axios.get("/api/verification",{
+                params:{
+                    id:data.id,
+                    aims:data.first_name,
+                    massage:_self.info
+                }
+            }).then((req)=>{
+                this.popUp = false;
+                this.msg = req.data.massage;
+                this.info = '';
+            })
+        },//添加好友
+        showPopup(index){
+            this.listIndex = index;
+            this.popUp = true;
+        },
+        hidePopup(){
+            this.popUp = false;
+            this.info = '';
+        }
     }
-  }
 }
 </script>
 

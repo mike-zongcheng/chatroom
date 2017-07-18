@@ -36,7 +36,6 @@ export default {
       phone:13575737563,
       price:100,
       src:'/api/avatarFile',
-
     }
   },
   components: {

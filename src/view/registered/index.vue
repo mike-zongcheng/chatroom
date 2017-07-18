@@ -9,7 +9,7 @@
             <input type="password" v-model="password" name="password">
         </label>
         <button class="login_btn" @click="updata">注册</button>
-        <my-massage :msg="msg" :callback="callback" ></my-massage>
+        <my-massage :msg.sync="msg" :callback="callback" ></my-massage>
     </div>
 </template>
 

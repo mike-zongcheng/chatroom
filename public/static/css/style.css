@@ -7,6 +7,16 @@ button{
 	cursor: pointer;
 }
 li{list-style: none;}
+.head{
+	width: 900px; 
+	height: 58px;
+	text-align: left;
+	color: #fcaf17;
+	margin:0 auto;
+	line-height: 58px;
+	font-size: 30px;
+	cursor: pointer;
+}
 .homeBox,.chatroomBox{
 	width: 400px;
 	min-height: 200px;
@@ -137,27 +147,33 @@ li{list-style: none;}
 	min-width: 200px;
 }
 .chatroomBox{
-	margin:86px auto 0;
-	width: 800px;
-	height: 800px;
+	margin:0 auto;
+	width: 900px;
+	height: 768px;
 }
 .chatroomTop{
-	height: 650px;
+	height: 618px;
 	border-bottom: 1px solid #fe8534;
 	font-size: 20px;
+	overflow: hidden;
+}
+.chatroomTop ul{
+	height: 564px;
+	margin-top: 30px;
+	overflow:auto;
 }
 .chatroomTop li{
 	text-align: left;
 	width: 760px;
 	margin: 5px auto;
 	overflow: hidden;
-	margin-bottom: 10px;
+	margin-bottom: 18px;
 }
 .chatroomBottom{
 	height: 150px;
 }
 .chatroomBottom textarea{
-	width: 498px;
+	width: 608px;
 	height: 110px;
 	border:none;
 	padding:10px;
@@ -170,7 +186,7 @@ li{list-style: none;}
 }
 .chatroomBottom button{
 	width: 224px;
-	height: 130px;
+	height: 110px;
 	background: #fe8534;
 	border:none;
 	color: #fff;
@@ -207,7 +223,7 @@ li{list-style: none;}
 	border-radius: 6px;
 	color: #333;
 }
-.newsBox,.friendBox{width: 900px; min-height: 800px; margin:20px auto 0; border:1px solid #ffcdac;border-radius: 8px;}
+.newsBox, .friendBox{width: 900px; min-height: 800px; margin:0 auto; border:1px solid #ffcdac;border-radius: 8px;}
 .news_list{margin-top: 40px; width: 840px; margin:0 auto;}
 .news_title{margin:6px auto 34px; text-align: center; border-bottom:1px solid #ffcdac; width:246px;position: relative;}
 .news_title span{display: inline-block; width:120px;position: relative; top: 17px;background: #fff;font-size: 26px; color: #fcaf17;}

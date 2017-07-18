@@ -8,23 +8,29 @@ import axios from 'axios'
 
 export default {
   props:{
-    msg:'',
+    msg:{
+        type:String
+    },
     callback:{
-      type:Function
+        type:Function
     }
   },
   data(){
     return {
-      show:false
+        show:false
     }
   },
   watch:{
     msg(){
-      this.show = true;
-      setTimeout(()=>{
-        this.show = false;
-        this.callback && this.callback();
-      },1500);
+        if(!this.msg){
+            return;
+        }
+        this.show = true;
+        setTimeout(()=>{
+            this.show = false;
+            this.$emit('update:msg', "")
+            this.callback && this.callback();
+        },1000);
     }
   }
 }

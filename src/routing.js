@@ -9,10 +9,13 @@ import Login from './view/login/index.vue'
 import Avatar from './view/avatar/index.vue'
 import Registered from './view/registered/index.vue'
 
-//好友部分
+// 好友部分
 import FriendList from './view/friend/list.vue'
 import FriendAdd from './view/friend/add.vue'
 import FriendNews from './view/friend/News.vue'
+
+// 聊天室
+import Chatroom from './view/chatroom/index.vue'
 
 Vue.use(VueRouter);
 
@@ -44,6 +47,10 @@ const router = new VueRouter({//带有name的路由不会进行登录判断，na
 		{
 			path:"/info",
 			components:{default:Avatar,head:Head}
+		},
+		{
+			path:"/chat",
+			components:{default:Chatroom,head:Head}
 		},
 		{
 			path:"/friend/list",

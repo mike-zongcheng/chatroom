@@ -3,8 +3,10 @@ import Vuex from 'vuex'
 import router from './routing.js'
 import '../public/static/css/style.css'
 import axios from 'axios'
+import VueSocketio from 'vue-socket.io'
 
 Vue.use(Vuex)
+Vue.use(VueSocketio, 'http://localhost:1996')
 
 const store = new Vuex.Store({
 	state:{
