@@ -11,35 +11,14 @@ Vue.use(VueSocketio, 'http://localhost:1996')
 const store = new Vuex.Store({
 	state:{
 		count:3,
-		status:'',
-		todo:[
-			{name:"zhang",num:3},
-			{name:"zong",num:4},
-			{name:"cheng",num:1},
-			{name:"mike",num:2}
-		]
+		status:''
 	},
 	mutations:{
-		increment(state,payload){
-			state.count+=payload.num;
-		},
 		getStatus(state,payload){
 			state.status = payload;
 		},//修改登录状态
 		setAvatar(state,payload){
 			state.status.data.avatar = payload;
-		}
-	},
-	getters:{
-		doneTodos:state=>{
-			return state.todo.sort((a,b)=>a.num-b.num)
-		},
-		loginStatus:state=>{
-			if(state.status){
-				return state.status;
-			}
-			store.commit("getStatus")
-			return 3;
 		}
 	},
 	actions:{
